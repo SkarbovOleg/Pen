@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StrokeArt | Премиальные ручки для истинного стиля</title>
+    <!-- Google Fonts для элегантной типографики -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fefaf5;
+            font-family: 'Inter', sans-serif;
+            color: #1e1b1a;
+            scroll-behavior: smooth;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* типографика */
+        h1, h2, h3, .logo, .nav-links a, .btn, .price, .card-title {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* шапка */
+        .navbar {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: #b87c4f;
+            font-weight: 300;
+        }
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2c2a29;
+            font-weight: 500;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #b87c4f;
+        }
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #b87c4f;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 2px 6px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* кнопки */
+        .btn {
+            display: inline-block;
+            background: #b87c4f;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.25s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #b87c4f;
+            color: #b87c4f;
+        }
+        .btn-outline:hover {
+            background: #b87c4f;
+            color: white;
+        }
+        .btn:hover {
+            background: #9b623b;
+            transform: translateY(-2px);
+        }
+
+        /* hero */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+            padding: 60px 0 40px;
+        }
+        .hero-content {
+            flex: 1;
+        }
+        .hero-content .badge {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #b87c4f;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        .hero-content p {
+            font-size: 18px;
+            color: #4a4644;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+        }
+
+        /* категории */
+        .section-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 60px 0 20px;
+            text-align: center;
+        }
+        .section-sub {
+            text-align: center;
+            color: #6b5e58;
+            margin-bottom: 48px;
+            font-size: 18px;
+        }
+
+        /* карточки товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1px solid #f0e8e0;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
+            border-color: #e2d4ca;
+        }
+        .product-img {
+            background: #faf3ec;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .product-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: 0.2s;
+        }
+        .product-info {
+            padding: 20px 20px 24px;
+        }
+        .product-category {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b87c4f;
+            font-weight: 600;
+        }
+        .card-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 8px 0 12px;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c2a29;
+            margin-bottom: 18px;
+        }
+        .add-to-cart {
+            width: 100%;
+            background: #f5ede6;
+            color: #3e2e26;
+            border: none;
+            padding: 12px;
+            border-radius: 60px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .add-to-cart:hover {
+            background: #e2d2c6;
+            color: #b87c4f;
+        }
+
+        /* about */
+        .about-section {
+            background: #fef3ea;
+            border-radius: 48px;
+            margin: 80px 0;
+            padding: 60px 48px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1.2;
+        }
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .about-text p {
+            font-size: 17px;
+            line-height: 1.5;
+            color: #3d3530;
+            margin-bottom: 24px;
+        }
+        .about-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .stat {
+            font-weight: 700;
+            font-size: 28px;
+        }
+        .stat span {
+            font-size: 14px;
+            font-weight: 400;
+            display: block;
+            color: #886b58;
+        }
+        .about-image {
+            flex: 0.8;
+            text-align: center;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 32px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        /* форма связи */
+        .contact-form {
+            background: white;
+            border-radius: 40px;
+            padding: 48px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid #efe2d8;
+            margin-bottom: 80px;
+        }
+        .form-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .form-group {
+            flex: 1 1 260px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e0d4ca;
+            border-radius: 60px;
+            font-family: 'Inter', sans-serif;
+            background: #fefcf9;
+            outline: none;
+            transition: 0.2s;
+        }
+        .form-group textarea {
+            border-radius: 24px;
+            resize: vertical;
+        }
+        .contact-form button {
+            margin-top: 12px;
+        }
+
+        /* корзина модалка */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 28px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .cart-items {
+            max-height: 350px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+        .cart-total {
+            font-weight: 800;
+            font-size: 22px;
+            text-align: right;
+            margin-top: 16px;
+        }
+        .empty-cart-msg {
+            text-align: center;
+            padding: 30px;
+            color: #8f7a6b;
+        }
+
+        footer {
+            border-top: 1px solid #e6dbd1;
+            padding: 40px 0;
+            text-align: center;
+            color: #6b5e58;
+        }
+
+        @media (max-width: 800px) {
+            .navbar { flex-direction: column; gap: 20px; }
+            .hero-content h1 { font-size: 40px; }
+            .hero { flex-direction: column; text-align: center; }
+            .about-section { padding: 36px 24px; }
+            .section-title { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- навигация -->
+        <nav class="navbar">
+            <div class="logo">Stroke<span>Art</span></div>
+            <div class="nav-links">
+                <a href="#" class="active" data-nav="home">Главная</a>
+                <a href="#" data-nav="catalog">Коллекция</a>
+                <a href="#" data-nav="about">О бренде</a>
+                <a href="#" data-nav="contact">Контакты</a>
+                <div class="cart-icon" id="cartIconBtn">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <!-- Hero секция -->
+        <div class="container" id="homeSection">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="badge">С 2012 — искусство письма</div>
+                    <h1 class="serif">Где линия <br>обретает душу</h1>
+                    <p>StrokeArt — премиальные авторские ручки, созданные для тех, кто ценит безупречный штрих, комфорт и элегантность. Каждая деталь — произведение искусства.</p>
+                    <a href="#" class="btn" data-nav="catalog">Исследовать коллекцию →</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://placehold.co/600x500/f4e9e1/8b5a3c?text=StrokeArt+Pen" alt="Элегантная ручка StrokeArt" style="background: #e7d9cf;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Каталог товаров -->
+        <div class="container" id="catalogSection">
+            <h2 class="section-title">Шедевры в каждой линии</h2>
+            <div class="section-sub">От классики до ультрасовременного дизайна</div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+
+        <!-- О бренде -->
+        <div class="container" id="aboutSection">
+            <div class="about-section">
+                <div class="about-text">
+                    <h2 class="serif">Искусство, заточенное вручную</h2>
+                    <p>StrokeArt объединяет традиции флорентийских мастерских и инновационные материалы. Каждая ручка проходит 42 этапа ручной отделки. Мы создаём инструменты, которые вдохновляют на великие идеи.</p>
+                    <div class="about-stats">
+                        <div class="stat">12+<span>лет совершенства</span></div>
+                        <div class="stat">45k<span>счастливых клиентов</span></div>
+                        <div class="stat">18<span>наград дизайна</span></div>
+                    </div>
+                    <a href="#" class="btn-outline btn" data-nav="contact">Связаться с ателье</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://placehold.co/400x480/f0e2d6/a77047?text=Handcrafted" alt="Мастерская ручек">
+                </div>
+            </div>
+        </div>
+
+        <!-- Контактная форма -->
+        <div class="container" id="contactSection">
+            <div class="contact-form">
+                <h2 class="serif" style="font-size: 32px; margin-bottom: 16px;">Персональная консультация</h2>
+                <p style="margin-bottom: 28px;">Закажите обратный звонок или подберите идеальный подарок</p>
+                <form id="feedbackForm">
+                    <div class="form-grid">
+                        <div class="form-group"><input type="text" placeholder="Ваше имя" id="userName" required></div>
+                        <div class="form-group"><input type="email" placeholder="Email" id="userEmail" required></div>
+                        <div class="form-group"><input type="tel" placeholder="Телефон" id="userPhone"></div>
+                        <div class="form-group"><textarea rows="2" placeholder="Пожелания или вопрос о ручках..." id="userMsg"></textarea></div>
+                    </div>
+                    <button type="submit" class="btn">Отправить запрос</button>
+                    <p id="formStatus" style="margin-top: 16px; font-size: 14px;"></p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 StrokeArt — мастерская премиальных письменных принадлежностей.</p>
+            <p style="margin-top: 12px;"><i class="fab fa-instagram"></i>  <i class="fab fa-pinterest"></i>  <i class="fab fa-facebook"></i>  @strokeart</p>
+        </div>
+    </footer>
+
+    <!-- Модалка корзины -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Ваша коллекция <i class="fas fa-pen-fancy"></i></h3>
+            <div id="cartItemsList" class="cart-items"></div>
+            <div class="cart-total" id="cartTotalPrice">Итого: 0 ₽</div>
+            <button class="btn" id="checkoutBtn" style="width:100%; margin-top: 16px;">Оформить заказ</button>
+        </div>
+    </div>
+
+    <script>
+        // ---------- ТОВАРЫ (каталог) ----------
+        const products = [
+            { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 18900, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy+Pen", desc: "Корпус из эбенового дерева" },
+            { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 24900, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora+Pen", desc: "Акрил с перламутровым эффектом" },
+            { id: 3, name: "StrokeArt Carbon", category: "Modern", price: 21500, img: "https://placehold.co/400x300/cfc1b2/7b5a3e?text=Carbon+Edition", desc: "Карбоновое волокно + титан" },
+            { id: 4, name: "StrokeArt Petite", category: "Mini", price: 9900, img: "https://placehold.co/400x300/f2e3d8/ab7a53?text=Petite+Pen", desc: "Компактная, для ежедневника" }
+        ];
+
+        let cart = []; // { id, name, price, quantity }
+
+        // Рендер каталога
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            products.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-img"><img src="${prod.img}" alt="${prod.name}"></div>
+                    <div class="product-info">
+                        <div class="product-category">${prod.category}</div>
+                        <div class="card-title">${prod.name}</div>
+                        <div class="price">${prod.price.toLocaleString()} ₽</div>
+                        <button class="add-to-cart" data-id="${prod.id}"><i class="fas fa-shopping-bag"></i> В корзину</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            // добавим обработчики на кнопки "В корзину"
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    addToCart(id);
+                });
+            });
+        }
+
+        // Добавление в корзину
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+            }
+            updateCartUI();
+            showTemporaryMessage(`✅ ${product.name} добавлена в корзину`);
+        }
+
+        // Обновление иконки корзины и отрисовка модалки
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountSpan = document.getElementById('cartCount');
+            if (cartCountSpan) cartCountSpan.innerText = totalItems;
+            // сохраним в localStorage для сохранения
+            localStorage.setItem('strokeart_cart', JSON.stringify(cart));
+            renderCartModal();
+        }
+
+        function renderCartModal() {
+            const container = document.getElementById('cartItemsList');
+            if (!container) return;
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart-msg">Корзина пуста, но искусство ждёт ✨</div>';
+                document.getElementById('cartTotalPrice').innerText = `Итого: 0 ₽`;
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                html += `
+                    <div class="cart-item">
+                        <div><strong>${item.name}</strong> × ${item.quantity}</div>
+                        <div>${itemTotal.toLocaleString()} ₽ 
+                            <button class="remove-item-btn" data-id="${item.id}" style="background:none; border:none; color:#b87c4f; margin-left:12px; cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            document.getElementById('cartTotalPrice').innerText = `Итого: ${total.toLocaleString()} ₽`;
+            // обработчики удаления
+            document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        function removeFromCart(id) {
+            const index = cart.findIndex(i => i.id === id);
+            if (index !== -1) {
+                if (cart[index].quantity > 1) cart[index].quantity--;
+                else cart.splice(index, 1);
+            }
+            updateCartUI();
+            showTemporaryMessage(`Товар удалён из корзины`);
+        }
+
+        function showTemporaryMessage(msg) {
+            const statusDiv = document.getElementById('formStatus');
+            if (statusDiv) {
+                const oldMsg = statusDiv.innerText;
+                statusDiv.innerText = msg;
+                statusDiv.style.color = '#b87c4f';
+                setTimeout(() => { if (statusDiv.innerText === msg) statusDiv.innerText = ''; }, 2000);
+            } else {
+                alert(msg);
+            }
+        }
+
+        // Загрузка корзины из localStorage
+        function loadCartFromStorage() {
+            const saved = localStorage.getItem('strokeart_cart');
+            if (saved) {
+                try {
+                    cart = JSON.parse(saved);
+                    if (!Array.isArray(cart)) cart = [];
+                    updateCartUI();
+                } catch(e) { cart = []; }
+            } else {
+                cart = [];
+                updateCartUI();
+            }
+        }
+
+        // Модалка корзины
+        const modal = document.getElementById('cartModal');
+        const cartIconBtn = document.getElementById('cartIconBtn');
+        const closeModalSpan = document.querySelector('.close-modal');
+        cartIconBtn.addEventListener('click', () => {
+            renderCartModal();
+            modal.style.display = 'flex';
+        });
+        closeModalSpan.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+        // кнопка "Оформить заказ"
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Корзина пуста. Выберите ручки из коллекции StrokeArt');
+                return;
+            }
+            alert(`Спасибо за заказ! Сумма: ${cart.reduce((s,i)=>s + i.price*i.quantity,0).toLocaleString()} ₽. Менеджер свяжется с вами в ближайшее время.`);
+            // Не очищаем корзину, чтобы пользователь мог продолжить, но для демо чистим?
+            // В реальном проекте — очистка после оформления, но для удобства: предложим очистку
+            if(confirm('Очистить корзину после оформления?')) {
+                cart = [];
+                updateCartUI();
+                modal.style.display = 'none';
+            }
+        });
+
+        // плавная навигация по якорям
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        document.querySelectorAll('[data-nav]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-nav');
+                if (target === 'home') scrollToSection('homeSection');
+                else if (target === 'catalog') scrollToSection('catalogSection');
+                else if (target === 'about') scrollToSection('aboutSection');
+                else if (target === 'contact') scrollToSection('contactSection');
+                // активные классы визуально
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // форма обратной связи
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('userName')?.value.trim();
+                const email = document.getElementById('userEmail')?.value.trim();
+                if (!name || !email) {
+                    document.getElementById('formStatus').innerText = 'Пожалуйста, укажите имя и email';
+                    return;
+                }
+                document.getElementById('formStatus').innerHTML = '<span style="color:#b87c4f;">Спасибо! Мы свяжемся с вами в течение дня ✨</span>';
+                feedbackForm.reset();
+                setTimeout(() => { document.getElementById('formStatus').innerText = ''; }, 4000);
+            });
+        }
+
+        // инициализация
+        renderProducts();
+        loadCartFromStorage();
+    </script>
+</body>
+</html>
