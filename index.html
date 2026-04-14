@@ -38,7 +38,7 @@
             font-family: 'Cormorant Garamond', serif;
         }
 
-        /* шапка */
+        /* шапка - исправленное выравнивание логотипа */
         .navbar {
             padding: 24px 0;
             display: flex;
@@ -51,18 +51,34 @@
         .logo {
             display: flex;
             align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e1b1a;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.5px;
         }
         
         .logo img {
-            height: 50px;
+            height: 45px;
             width: auto;
             display: block;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: transform 0.3s ease;
         }
         
         .logo img:hover {
             transform: scale(1.02);
+        }
+        
+        .logo-text {
+            color: #1e1b1a;
+        }
+        
+        .logo-text span {
+            color: #b87c4f;
+            font-weight: 700;
         }
         
         .nav-links {
@@ -404,17 +420,18 @@
             .hero { flex-direction: column; text-align: center; }
             .about-section { padding: 36px 24px; }
             .section-title { font-size: 30px; }
-            .logo img { height: 40px; }
+            .logo img { height: 35px; }
+            .logo { font-size: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- навигация - теперь только логотип без текста -->
+        <!-- навигация - исправленное выравнивание логотипа и названия -->
         <nav class="navbar">
             <div class="logo">
                 <img src="https://sun9-42.vkuserphoto.ru/s/v1/ig2/lI4Ux3MweDZnXw0ZNgkx6EuV6zdeUShsq7UrLU23dieTK9VmjdTCfQE-QoAv66uEXq5AUafhUpVgBsTUJofNQImj.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&u=FFDqhODQaOhtxta9wgPgdUx5GuNKMgbt01phxcSkqEA&cs=1024x0" alt="StrokeArt Logo">
-                Stroke<span>Art</span>
+                <div class="logo-text">Stroke<span>Art</span></div>
             </div>
             <div class="nav-links">
                 <a href="#" class="active" data-nav="home">Главная</a>
@@ -440,7 +457,7 @@
                     <a href="#" class="btn" data-nav="catalog">Исследовать коллекцию →</a>
                 </div>
                 <div class="hero-image">
-                    <img src="https://sun9-42.vkuserphoto.ru/s/v1/ig2/lI4Ux3MweDZnXw0ZNgkx6EuV6zdeUShsq7UrLU23dieTK9VmjdTCfQE-QoAv66uEXq5AUafhUpVgBsTUJofNQImj.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&u=FFDqhODQaOhtxta9wgPgdUx5GuNKMgbt01phxcSkqEA&cs=1024x0" alt="Элегантная ручка StrokeArt" style="background: #e7d9cf;">
+                    <img src="https://sun9-42.vkuserphoto.ru/s/v1/ig2/lI4Ux3MweDZnXw0ZNgkx6EuV6zdeUShsq7UrLU23dieTK9VmjdTCfQE-QoAv66uEXq5AUafhUpVgBsTUJofNQImj.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&u=FFDqhODQaOhtxta9wgPgdUx5GuNKMgbt01phxcSkqEA&cs=1024x0" alt="Элегантная ручка StrokeArt" style="background: #e7d9cf; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -645,26 +662,33 @@
         const modal = document.getElementById('cartModal');
         const cartIconBtn = document.getElementById('cartIconBtn');
         const closeModalSpan = document.querySelector('.close-modal');
-        cartIconBtn.addEventListener('click', () => {
-            renderCartModal();
-            modal.style.display = 'flex';
-        });
-        closeModalSpan.addEventListener('click', () => modal.style.display = 'none');
+        if (cartIconBtn) {
+            cartIconBtn.addEventListener('click', () => {
+                renderCartModal();
+                modal.style.display = 'flex';
+            });
+        }
+        if (closeModalSpan) {
+            closeModalSpan.addEventListener('click', () => modal.style.display = 'none');
+        }
         window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
 
         // кнопка "Оформить заказ"
-        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-            if (cart.length === 0) {
-                alert('Корзина пуста. Выберите ручки из коллекции StrokeArt');
-                return;
-            }
-            alert(`Спасибо за заказ! Сумма: ${cart.reduce((s,i)=>s + i.price*i.quantity,0).toLocaleString()} ₽. Менеджер свяжется с вами в ближайшее время.`);
-            if(confirm('Очистить корзину после оформления?')) {
-                cart = [];
-                updateCartUI();
-                modal.style.display = 'none';
-            }
-        });
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Корзина пуста. Выберите ручки из коллекции StrokeArt');
+                    return;
+                }
+                alert(`Спасибо за заказ! Сумма: ${cart.reduce((s,i)=>s + i.price*i.quantity,0).toLocaleString()} ₽. Менеджер свяжется с вами в ближайшее время.`);
+                if(confirm('Очистить корзину после оформления?')) {
+                    cart = [];
+                    updateCartUI();
+                    modal.style.display = 'none';
+                }
+            });
+        }
 
         // плавная навигация по якорям
         function scrollToSection(sectionId) {
