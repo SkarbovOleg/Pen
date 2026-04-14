@@ -30,7 +30,7 @@
         }
 
         /* типографика */
-        h1, h2, h3, .logo, .nav-links a, .btn, .price, .card-title {
+        h1, h2, h3, .nav-links a, .btn, .price, .card-title {
             font-family: 'Inter', sans-serif;
         }
 
@@ -49,24 +49,20 @@
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
         }
         
         .logo img {
-            height: 45px;
+            height: 50px;
             width: auto;
             display: block;
             border-radius: 8px;
+            transition: transform 0.3s ease;
         }
         
-        .logo span {
-            color: #b87c4f;
-            font-weight: 300;
+        .logo img:hover {
+            transform: scale(1.02);
         }
         
         .nav-links {
@@ -408,16 +404,16 @@
             .hero { flex-direction: column; text-align: center; }
             .about-section { padding: 36px 24px; }
             .section-title { font-size: 30px; }
+            .logo img { height: 40px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- навигация -->
+        <!-- навигация - теперь только логотип без текста -->
         <nav class="navbar">
             <div class="logo">
                 <img src="https://sun9-42.vkuserphoto.ru/s/v1/ig2/lI4Ux3MweDZnXw0ZNgkx6EuV6zdeUShsq7UrLU23dieTK9VmjdTCfQE-QoAv66uEXq5AUafhUpVgBsTUJofNQImj.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&u=FFDqhODQaOhtxta9wgPgdUx5GuNKMgbt01phxcSkqEA&cs=1024x0" alt="StrokeArt Logo">
-                <span>Stroke<span>Art</span></span>
             </div>
             <div class="nav-links">
                 <a href="#" class="active" data-nav="home">Главная</a>
