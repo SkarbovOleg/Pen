@@ -31,7 +31,6 @@
             --btn-bg: #b87c4f;
             --btn-hover: #9b623b;
             --btn-outline: #b87c4f;
-            --card-bg-hover: white;
             --add-to-cart-bg: #f5ede6;
             --add-to-cart-hover: #e2d2c6;
             --modal-bg: white;
@@ -40,8 +39,8 @@
             --stat-color: #886b58;
             --toast-bg: #2c2a29;
             --blog-bg: #ffffff;
-            --sale-bg: #fff5f0;
-            --sale-border: #ffe0d0;
+            --rating-star: #ffc107;
+            --rating-star-empty: #e0e0e0;
         }
 
         /* ========== ТЕМНАЯ ТЕМА ========== */
@@ -60,7 +59,6 @@
             --btn-bg: #c9976b;
             --btn-hover: #b87c4f;
             --btn-outline: #c9976b;
-            --card-bg-hover: #2a2a2a;
             --add-to-cart-bg: #2a2522;
             --add-to-cart-hover: #3d3530;
             --modal-bg: #1e1e1e;
@@ -69,8 +67,8 @@
             --stat-color: #c9976b;
             --toast-bg: #3d3530;
             --blog-bg: #1e1e1e;
-            --sale-bg: #2a201c;
-            --sale-border: #4a3a32;
+            --rating-star: #ffc107;
+            --rating-star-empty: #4a4a4a;
         }
 
         body {
@@ -90,6 +88,37 @@
 
         .serif {
             font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Кнопка "Наверх" */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--btn-bg);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: none;
+            font-size: 20px;
+        }
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top:hover {
+            background: var(--btn-hover);
+            transform: translateY(-3px);
         }
 
         /* шапка */
@@ -200,6 +229,29 @@
             transform: translateY(-2px);
         }
 
+        /* Рейтинг звезды */
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .stars {
+            display: flex;
+            gap: 3px;
+        }
+        .stars i {
+            color: var(--rating-star);
+            font-size: 14px;
+        }
+        .stars i.empty {
+            color: var(--rating-star-empty);
+        }
+        .rating-count {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
         /* Акция / Баннер с таймером */
         .sale-banner {
             background: linear-gradient(135deg, #b87c4f 0%, #9b623b 100%);
@@ -304,7 +356,7 @@
             line-height: 1.5;
         }
 
-        /* Корзина с промокодом */
+        /* Корзина с промокодом и счетчиком */
         .promo-section {
             margin-top: 20px;
             padding-top: 16px;
@@ -336,11 +388,129 @@
             font-size: 14px;
             margin-top: 8px;
         }
-        body.dark-theme .discount-info {
-            color: inherit;
+
+        /* Счетчик количества в корзине */
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cart-item-controls button {
+            background: var(--border-form);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .cart-item-controls button:hover {
+            background: var(--btn-bg);
+            color: white;
+        }
+        .cart-item-quantity {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
         }
 
-        /* Hero и остальные стили */
+        /* Отзывы */
+        .reviews-section {
+            margin: 40px 0 60px;
+        }
+        .reviews-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .average-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 1px solid var(--border-card);
+        }
+        .average-number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .review-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .review-author {
+            font-weight: 600;
+        }
+        .review-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+        .add-review {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid var(--border-card);
+        }
+        .add-review h4 {
+            margin-bottom: 16px;
+        }
+        .review-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-form);
+            border-radius: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 12px;
+            resize: vertical;
+        }
+        .review-stars-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .review-stars-input i {
+            font-size: 24px;
+            color: var(--rating-star-empty);
+            transition: 0.1s;
+            cursor: pointer;
+        }
+        .review-stars-input i.active {
+            color: var(--rating-star);
+        }
+
+        /* Hero */
         .hero {
             display: flex;
             flex-wrap: wrap;
@@ -431,7 +601,7 @@
             position: relative;
         }
         .cart-items { max-height: 350px; overflow-y: auto; margin: 20px 0; }
-        .cart-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-form); }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-form); flex-wrap: wrap; gap: 10px; }
         .toast-notification {
             position: fixed;
             bottom: 30px;
@@ -460,10 +630,16 @@
             .timer { gap: 8px; }
             .timer-box { padding: 8px 12px; min-width: 55px; }
             .timer-number { font-size: 24px; }
+            .scroll-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
         }
     </style>
 </head>
 <body>
+    <!-- Кнопка "Наверх" -->
+    <button class="scroll-top" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <div class="container">
         <nav class="navbar">
             <div class="logo">
@@ -487,7 +663,6 @@
 
     <main>
         <div class="container" id="homeSection">
-            <!-- Акция с таймером и промокодом -->
             <div class="sale-banner">
                 <div class="sale-text">
                     <h3>🔥 Летняя распродажа</h3>
@@ -546,6 +721,34 @@
             </div>
         </div>
 
+        <!-- Отзывы -->
+        <div class="container" id="reviewsSection">
+            <div class="reviews-section">
+                <div class="reviews-title">
+                    Отзывы наших клиентов
+                    <div class="average-rating" id="averageRatingDisplay">
+                        <span class="average-number">0.0</span>
+                        <div class="stars" id="averageStars"></div>
+                        <span>(0 отзывов)</span>
+                    </div>
+                </div>
+                <div class="reviews-list" id="reviewsList"></div>
+                <div class="add-review">
+                    <h4>Оставить отзыв</h4>
+                    <div class="review-stars-input" id="reviewStarsInput">
+                        <i class="far fa-star" data-star="1"></i>
+                        <i class="far fa-star" data-star="2"></i>
+                        <i class="far fa-star" data-star="3"></i>
+                        <i class="far fa-star" data-star="4"></i>
+                        <i class="far fa-star" data-star="5"></i>
+                    </div>
+                    <input type="text" id="reviewAuthorInput" class="review-input" placeholder="Ваше имя" maxlength="50">
+                    <textarea id="reviewTextInput" class="review-input" rows="3" placeholder="Поделитесь впечатлениями о ручках StrokeArt..."></textarea>
+                    <button class="btn" id="submitReviewBtn">Оставить отзыв</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Контакты -->
         <div class="container" id="contactSection">
             <div class="contact-form">
@@ -578,7 +781,6 @@
             <div id="cartItemsList" class="cart-items"></div>
             <div class="cart-total" id="cartTotalPrice">Итого: 0 ₽</div>
             
-            <!-- Промокод (без текста о доступных кодах) -->
             <div class="promo-section">
                 <div style="font-weight:600;">Промокод</div>
                 <div class="promo-input-group">
@@ -595,19 +797,126 @@
     <script>
         // ========== ТОВАРЫ ==========
         const products = [
-            { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 990, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy" },
-            { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 1250, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora" },
-            { id: 3, name: "StrokeArt Carbon", category: "Modern", price: 870, img: "https://placehold.co/400x300/cfc1b2/7b5a3e?text=Carbon" },
-            { id: 4, name: "StrokeArt Petite", category: "Mini", price: 540, img: "https://placehold.co/400x300/f2e3d8/ab7a53?text=Petite" },
-            { id: 5, name: "StrokeArt Royal", category: "Premium", price: 1890, img: "https://placehold.co/400x300/f0e0d0/a05c3c?text=Royal" },
-            { id: 6, name: "StrokeArt Minimal", category: "Modern", price: 690, img: "https://placehold.co/400x300/e6d8ce/b27a55?text=Minimal" }
+            { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 990, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy", rating: 4.8, reviews: 12 },
+            { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 1250, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora", rating: 4.9, reviews: 8 },
+            { id: 3, name: "StrokeArt Carbon", category: "Modern", price: 870, img: "https://placehold.co/400x300/cfc1b2/7b5a3e?text=Carbon", rating: 4.7, reviews: 15 },
+            { id: 4, name: "StrokeArt Petite", category: "Mini", price: 540, img: "https://placehold.co/400x300/f2e3d8/ab7a53?text=Petite", rating: 4.6, reviews: 9 },
+            { id: 5, name: "StrokeArt Royal", category: "Premium", price: 1890, img: "https://placehold.co/400x300/f0e0d0/a05c3c?text=Royal", rating: 5.0, reviews: 6 },
+            { id: 6, name: "StrokeArt Minimal", category: "Modern", price: 690, img: "https://placehold.co/400x300/e6d8ce/b27a55?text=Minimal", rating: 4.5, reviews: 11 }
         ];
 
         let cart = [];
-        let appliedDiscount = 0; // 0 или 0.15 (15%)
+        let appliedDiscount = 0;
         let activePromo = null;
 
-        // Рендер каталога
+        // ========== ОТЗЫВЫ ==========
+        let reviews = [
+            { id: 1, author: "Александр", rating: 5, text: "Потрясающая ручка! Пишет мягко, лежит в руке идеально. Подарок для души.", date: "2026-03-15" },
+            { id: 2, author: "Екатерина", rating: 4, text: "Очень стильный дизайн. Корпус приятный на ощупь. Доставка быстрая.", date: "2026-03-20" },
+            { id: 3, author: "Михаил", rating: 5, text: "Лучшая ручка из всех, что у меня были. Рекомендую!", date: "2026-04-01" }
+        ];
+
+        function renderStars(rating, containerId) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            const fullStars = Math.floor(rating);
+            const hasHalf = rating % 1 >= 0.5;
+            let starsHtml = '';
+            for(let i = 1; i <= 5; i++) {
+                if(i <= fullStars) starsHtml += '<i class="fas fa-star"></i>';
+                else if(hasHalf && i === fullStars + 1) starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                else starsHtml += '<i class="far fa-star"></i>';
+            }
+            container.innerHTML = starsHtml;
+        }
+
+        function renderAverageRating() {
+            if(reviews.length === 0) {
+                document.getElementById('averageNumber').textContent = '0.0';
+                document.getElementById('averageStars').innerHTML = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+                return;
+            }
+            const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+            document.getElementById('averageNumber').textContent = avg.toFixed(1);
+            const starsContainer = document.getElementById('averageStars');
+            if(starsContainer) {
+                const fullStars = Math.floor(avg);
+                const hasHalf = avg % 1 >= 0.5;
+                let starsHtml = '';
+                for(let i = 1; i <= 5; i++) {
+                    if(i <= fullStars) starsHtml += '<i class="fas fa-star"></i>';
+                    else if(hasHalf && i === fullStars + 1) starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                    else starsHtml += '<i class="far fa-star"></i>';
+                }
+                starsContainer.innerHTML = starsHtml;
+            }
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsList');
+            if(!container) return;
+            if(reviews.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted);">Пока нет отзывов. Будьте первым!</div>';
+                return;
+            }
+            container.innerHTML = reviews.map(rev => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <span class="review-author">${escapeHtml(rev.author)}</span>
+                            <div class="stars" style="margin-top:5px;">${getStarsHtml(rev.rating)}</div>
+                        </div>
+                        <div class="review-date">${rev.date}</div>
+                    </div>
+                    <div class="review-text">${escapeHtml(rev.text)}</div>
+                </div>
+            `).join('');
+            renderAverageRating();
+        }
+
+        function getStarsHtml(rating) {
+            const full = Math.floor(rating);
+            let html = '';
+            for(let i = 1; i <= 5; i++) {
+                if(i <= full) html += '<i class="fas fa-star" style="color:var(--rating-star);"></i>';
+                else html += '<i class="far fa-star" style="color:var(--rating-star-empty);"></i>';
+            }
+            return html;
+        }
+
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        let selectedRating = 0;
+        function initReviewStars() {
+            const starsContainer = document.getElementById('reviewStarsInput');
+            if(!starsContainer) return;
+            const stars = starsContainer.querySelectorAll('i');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.getAttribute('data-star'));
+                    stars.forEach(s => {
+                        const starVal = parseInt(s.getAttribute('data-star'));
+                        if(starVal <= selectedRating) {
+                            s.className = 'fas fa-star';
+                            s.style.color = 'var(--rating-star)';
+                        } else {
+                            s.className = 'far fa-star';
+                            s.style.color = 'var(--rating-star-empty)';
+                        }
+                    });
+                });
+            });
+        }
+
+        // ========== РЕНДЕР КАТАЛОГА ==========
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             if(!grid) return;
@@ -620,6 +929,10 @@
                     <div class="product-info">
                         <div class="product-category">${prod.category}</div>
                         <div class="card-title">${prod.name}</div>
+                        <div class="rating">
+                            <div class="stars">${getStarsHtml(prod.rating)}</div>
+                            <span class="rating-count">(${prod.reviews} отзывов)</span>
+                        </div>
                         <div class="price">${prod.price.toLocaleString()} ₽</div>
                         <button class="add-to-cart" data-id="${prod.id}"><i class="fas fa-shopping-bag"></i> В корзину</button>
                     </div>
@@ -634,14 +947,31 @@
             });
         }
 
+        // ========== КОРЗИНА С КНОПКАМИ +/- ==========
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if(!product) return;
             const existing = cart.find(i => i.id === productId);
-            if(existing) existing.quantity++;
-            else cart.push({ ...product, quantity: 1 });
+            if(existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
             updateCartUI();
             showToast(`✅ ${product.name} добавлена`);
+        }
+
+        function updateCartItemQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if(item) {
+                const newQuantity = item.quantity + delta;
+                if(newQuantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                } else {
+                    item.quantity = newQuantity;
+                }
+            }
+            updateCartUI();
         }
 
         function updateCartUI() {
@@ -666,7 +996,18 @@
             }
             let html = '';
             cart.forEach(item => {
-                html += `<div class="cart-item"><div><strong>${item.name}</strong> × ${item.quantity}</div><div>${(item.price * item.quantity).toLocaleString()} ₽ <button class="remove-item-btn" data-id="${item.id}" style="background:none; border:none; color:#b87c4f; cursor:pointer;"><i class="fas fa-trash-alt"></i></button></div></div>`;
+                html += `
+                    <div class="cart-item">
+                        <div><strong>${item.name}</strong></div>
+                        <div class="cart-item-controls">
+                            <button class="cart-decr" data-id="${item.id}">-</button>
+                            <span class="cart-item-quantity">${item.quantity}</span>
+                            <button class="cart-incr" data-id="${item.id}">+</button>
+                            <span style="min-width:70px; text-align:right;">${(item.price * item.quantity).toLocaleString()} ₽</span>
+                            <button class="remove-item-btn" data-id="${item.id}" style="background:none; border:none; color:#b87c4f; cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                `;
             });
             container.innerHTML = html;
             const { subtotal, total } = getTotalWithDiscount();
@@ -675,25 +1016,30 @@
             } else {
                 document.getElementById('cartTotalPrice').innerHTML = `Итого: ${total.toLocaleString()} ₽`;
             }
+            
+            document.querySelectorAll('.cart-incr').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    updateCartItemQuantity(id, 1);
+                });
+            });
+            document.querySelectorAll('.cart-decr').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    updateCartItemQuantity(id, -1);
+                });
+            });
             document.querySelectorAll('.remove-item-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
-                    removeFromCart(id);
+                    cart = cart.filter(i => i.id !== id);
+                    updateCartUI();
+                    showToast('Товар удалён из корзины');
                 });
             });
         }
 
-        function removeFromCart(id) {
-            const index = cart.findIndex(i => i.id === id);
-            if(index !== -1) {
-                if(cart[index].quantity > 1) cart[index].quantity--;
-                else cart.splice(index,1);
-            }
-            updateCartUI();
-            showToast('Корзина обновлена');
-        }
-
-        // Промокоды работают, но без текста-подсказки внизу
+        // ========== ПРОМОКОДЫ ==========
         function applyPromo(code) {
             if(code === 'STROKE15') {
                 appliedDiscount = 0.15;
@@ -717,7 +1063,7 @@
             renderCartModal();
         }
 
-        // Таймер обратного отсчета (до конца месяца)
+        // ========== ТАЙМЕР ==========
         function startCountdown() {
             const endDate = new Date();
             endDate.setMonth(endDate.getMonth() + 1);
@@ -744,7 +1090,7 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Блог посты
+        // ========== БЛОГ ==========
         const blogPosts = [
             { tag: "СОВЕТЫ", title: "Как выбрать идеальную ручку", excerpt: "Разбираем типы перьев, материалы корпуса и эргономику.", img: "https://placehold.co/600x400/e8d9ce/7c5a44?text=Pen+Guide" },
             { tag: "УХОД", title: "Уход за премиальными ручками", excerpt: "Чистка, хранение и продление срока службы.", img: "https://placehold.co/600x400/dbcbbc/9b6e4c?text=Care" },
@@ -765,6 +1111,7 @@
             `).join('');
         }
 
+        // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
         function showToast(msg, isError=false) {
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
@@ -780,7 +1127,22 @@
             updateCartUI();
         }
 
-        // Модалка и тема
+        // ========== КНОПКА "НАВЕРХ" ==========
+        function initScrollTop() {
+            const btn = document.getElementById('scrollTopBtn');
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 300) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ========== МОДАЛКА И ТЕМА ==========
         const modal = document.getElementById('cartModal');
         document.getElementById('cartIconBtn').addEventListener('click', () => { renderCartModal(); modal.style.display = 'flex'; });
         document.querySelector('.close-modal').addEventListener('click', () => modal.style.display = 'none');
@@ -796,7 +1158,6 @@
             if(confirm('Очистить корзину?')) { cart = []; appliedDiscount = 0; activePromo = null; updateCartUI(); modal.style.display = 'none'; }
         });
 
-        // Тема
         function initTheme() {
             const saved = localStorage.getItem('strokeart_theme');
             const toggle = document.getElementById('themeToggle');
@@ -835,11 +1196,42 @@
             e.target.reset();
         });
 
+        // Отправка отзыва
+        document.getElementById('submitReviewBtn')?.addEventListener('click', () => {
+            const author = document.getElementById('reviewAuthorInput').value.trim();
+            const text = document.getElementById('reviewTextInput').value.trim();
+            if(!author) { showToast('Введите ваше имя', true); return; }
+            if(!text) { showToast('Напишите текст отзыва', true); return; }
+            if(selectedRating === 0) { showToast('Поставьте оценку', true); return; }
+            
+            const newReview = {
+                id: Date.now(),
+                author: author,
+                rating: selectedRating,
+                text: text,
+                date: new Date().toISOString().slice(0,10)
+            };
+            reviews.unshift(newReview);
+            renderReviews();
+            
+            document.getElementById('reviewAuthorInput').value = '';
+            document.getElementById('reviewTextInput').value = '';
+            selectedRating = 0;
+            const stars = document.querySelectorAll('#reviewStarsInput i');
+            stars.forEach(s => { s.className = 'far fa-star'; s.style.color = 'var(--rating-star-empty)'; });
+            
+            showToast('Спасибо за ваш отзыв!');
+        });
+
+        // Инициализация
         renderProducts();
         renderBlog();
+        renderReviews();
         loadCartFromStorage();
         initTheme();
         startCountdown();
+        initScrollTop();
+        initReviewStars();
     </script>
 </body>
 </html>
