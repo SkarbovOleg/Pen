@@ -15,12 +15,73 @@
             box-sizing: border-box;
         }
 
+        /* ========== СВЕТЛАЯ ТЕМА (по умолчанию) ========== */
+        :root {
+            --bg-primary: #fefaf5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-about: #fef3ea;
+            --bg-form: #ffffff;
+            --text-primary: #1e1b1a;
+            --text-secondary: #4a4644;
+            --text-muted: #6b5e58;
+            --border-light: rgba(0,0,0,0.05);
+            --border-card: #f0e8e0;
+            --border-form: #e0d4ca;
+            --btn-bg: #b87c4f;
+            --btn-hover: #9b623b;
+            --btn-outline: #b87c4f;
+            --btn-outline-hover-bg: #b87c4f;
+            --btn-outline-hover-text: white;
+            --card-bg-hover: white;
+            --add-to-cart-bg: #f5ede6;
+            --add-to-cart-hover: #e2d2c6;
+            --shadow: 0 8px 20px rgba(0,0,0,0.03);
+            --shadow-hover: 0 20px 30px -12px rgba(0,0,0,0.12);
+            --modal-bg: white;
+            --footer-border: #e6dbd1;
+            --icon-color: #1e1b1a;
+            --stat-color: #886b58;
+            --toast-bg: #2c2a29;
+        }
+
+        /* ========== ТЕМНАЯ ТЕМА ========== */
+        body.dark-theme {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-card: #1e1e1e;
+            --bg-about: #2a1f1a;
+            --bg-form: #1e1e1e;
+            --text-primary: #e8e2dc;
+            --text-secondary: #b8b0a8;
+            --text-muted: #9a8e86;
+            --border-light: rgba(255,255,255,0.1);
+            --border-card: #2d2a28;
+            --border-form: #3d3530;
+            --btn-bg: #c9976b;
+            --btn-hover: #b87c4f;
+            --btn-outline: #c9976b;
+            --btn-outline-hover-bg: #c9976b;
+            --btn-outline-hover-text: #121212;
+            --card-bg-hover: #2a2a2a;
+            --add-to-cart-bg: #2a2522;
+            --add-to-cart-hover: #3d3530;
+            --shadow: 0 8px 20px rgba(0,0,0,0.3);
+            --shadow-hover: 0 20px 30px -12px rgba(0,0,0,0.4);
+            --modal-bg: #1e1e1e;
+            --footer-border: #2d2a28;
+            --icon-color: #c9976b;
+            --stat-color: #c9976b;
+            --toast-bg: #3d3530;
+        }
+
         body {
-            background-color: #fefaf5;
+            background-color: var(--bg-primary);
             font-family: 'Inter', sans-serif;
-            color: #1e1b1a;
+            color: var(--text-primary);
             scroll-behavior: smooth;
             line-height: 1.4;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -38,14 +99,14 @@
             font-family: 'Cormorant Garamond', serif;
         }
 
-        /* шапка - исправленное выравнивание логотипа */
+        /* шапка */
         .navbar {
             padding: 24px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-light);
         }
 
         .logo {
@@ -55,7 +116,7 @@
             text-decoration: none;
             font-size: 24px;
             font-weight: 600;
-            color: #1e1b1a;
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             letter-spacing: -0.5px;
         }
@@ -74,7 +135,7 @@
         }
         
         .logo-text {
-            color: #1e1b1a;
+            color: var(--text-primary);
         }
         
         .logo-text span {
@@ -89,7 +150,7 @@
         }
         .nav-links a {
             text-decoration: none;
-            color: #2c2a29;
+            color: var(--text-secondary);
             font-weight: 500;
             font-size: 16px;
             transition: 0.2s;
@@ -97,10 +158,31 @@
         .nav-links a:hover, .nav-links a.active {
             color: #b87c4f;
         }
+        
+        /* Переключатель темы */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--icon-color);
+            padding: 8px;
+            border-radius: 50%;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            background: var(--border-light);
+            transform: scale(1.1);
+        }
+        
         .cart-icon {
             position: relative;
             font-size: 20px;
             cursor: pointer;
+            color: var(--icon-color);
         }
         .cart-count {
             position: absolute;
@@ -119,7 +201,7 @@
         /* кнопки */
         .btn {
             display: inline-block;
-            background: #b87c4f;
+            background: var(--btn-bg);
             color: white;
             padding: 12px 28px;
             border-radius: 40px;
@@ -133,15 +215,15 @@
         }
         .btn-outline {
             background: transparent;
-            border: 1.5px solid #b87c4f;
-            color: #b87c4f;
+            border: 1.5px solid var(--btn-outline);
+            color: var(--btn-outline);
         }
         .btn-outline:hover {
-            background: #b87c4f;
-            color: white;
+            background: var(--btn-outline-hover-bg);
+            color: var(--btn-outline-hover-text);
         }
         .btn:hover {
-            background: #9b623b;
+            background: var(--btn-hover);
             transform: translateY(-2px);
         }
 
@@ -173,7 +255,7 @@
         }
         .hero-content p {
             font-size: 18px;
-            color: #4a4644;
+            color: var(--text-secondary);
             margin-bottom: 32px;
             max-width: 500px;
         }
@@ -196,7 +278,7 @@
         }
         .section-sub {
             text-align: center;
-            color: #6b5e58;
+            color: var(--text-muted);
             margin-bottom: 48px;
             font-size: 18px;
         }
@@ -209,20 +291,20 @@
             margin-bottom: 40px;
         }
         .product-card {
-            background: white;
+            background: var(--bg-card);
             border-radius: 28px;
             overflow: hidden;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-            border: 1px solid #f0e8e0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-card);
         }
         .product-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
-            border-color: #e2d4ca;
+            box-shadow: var(--shadow-hover);
+            border-color: #b87c4f;
         }
         .product-img {
-            background: #faf3ec;
+            background: var(--bg-primary);
             height: 260px;
             display: flex;
             align-items: center;
@@ -253,13 +335,13 @@
         .price {
             font-size: 24px;
             font-weight: 700;
-            color: #2c2a29;
+            color: var(--text-primary);
             margin-bottom: 18px;
         }
         .add-to-cart {
             width: 100%;
-            background: #f5ede6;
-            color: #3e2e26;
+            background: var(--add-to-cart-bg);
+            color: var(--text-primary);
             border: none;
             padding: 12px;
             border-radius: 60px;
@@ -272,13 +354,13 @@
             transition: 0.2s;
         }
         .add-to-cart:hover {
-            background: #e2d2c6;
+            background: var(--add-to-cart-hover);
             color: #b87c4f;
         }
 
         /* about */
         .about-section {
-            background: #fef3ea;
+            background: var(--bg-about);
             border-radius: 48px;
             margin: 80px 0;
             padding: 60px 48px;
@@ -297,7 +379,7 @@
         .about-text p {
             font-size: 17px;
             line-height: 1.5;
-            color: #3d3530;
+            color: var(--text-secondary);
             margin-bottom: 24px;
         }
         .about-stats {
@@ -313,7 +395,7 @@
             font-size: 14px;
             font-weight: 400;
             display: block;
-            color: #886b58;
+            color: var(--stat-color);
         }
         .about-image {
             flex: 0.8;
@@ -327,11 +409,11 @@
 
         /* форма связи */
         .contact-form {
-            background: white;
+            background: var(--bg-form);
             border-radius: 40px;
             padding: 48px 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            border: 1px solid #efe2d8;
+            border: 1px solid var(--border-form);
             margin-bottom: 80px;
         }
         .form-grid {
@@ -339,18 +421,19 @@
             flex-wrap: wrap;
             gap: 24px;
         }
-        .form-group {
-            flex: 1 1 260px;
-        }
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 14px 18px;
-            border: 1px solid #e0d4ca;
+            border: 1px solid var(--border-form);
             border-radius: 60px;
             font-family: 'Inter', sans-serif;
-            background: #fefcf9;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             outline: none;
             transition: 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #b87c4f;
         }
         .form-group textarea {
             border-radius: 24px;
@@ -366,24 +449,26 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-content {
-            background: white;
+            background: var(--modal-bg);
             max-width: 500px;
             width: 90%;
             border-radius: 32px;
             padding: 28px;
             position: relative;
+            color: var(--text-primary);
         }
         .close-modal {
             position: absolute;
             top: 20px; right: 24px;
             font-size: 28px;
             cursor: pointer;
+            color: var(--text-muted);
         }
         .cart-items {
             max-height: 350px;
@@ -393,8 +478,9 @@
         .cart-item {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-form);
             padding: 12px 0;
+            color: var(--text-primary);
         }
         .cart-total {
             font-weight: 800;
@@ -405,14 +491,14 @@
         .empty-cart-msg {
             text-align: center;
             padding: 30px;
-            color: #8f7a6b;
+            color: var(--text-muted);
         }
 
         footer {
-            border-top: 1px solid #e6dbd1;
+            border-top: 1px solid var(--footer-border);
             padding: 40px 0;
             text-align: center;
-            color: #6b5e58;
+            color: var(--text-muted);
         }
 
         /* уведомление */
@@ -421,7 +507,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #2c2a29;
+            background: var(--toast-bg);
             color: white;
             padding: 12px 24px;
             border-radius: 60px;
@@ -450,13 +536,13 @@
             .section-title { font-size: 30px; }
             .logo img { height: 35px; }
             .logo { font-size: 20px; }
-            .nav-links { gap: 24px; }
+            .nav-links { gap: 20px; flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- навигация - исправленное выравнивание логотипа и названия -->
+        <!-- навигация -->
         <nav class="navbar">
             <div class="logo">
                 <img src="https://sun9-42.vkuserphoto.ru/s/v1/ig2/lI4Ux3MweDZnXw0ZNgkx6EuV6zdeUShsq7UrLU23dieTK9VmjdTCfQE-QoAv66uEXq5AUafhUpVgBsTUJofNQImj.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1024x1024&from=bu&u=FFDqhODQaOhtxta9wgPgdUx5GuNKMgbt01phxcSkqEA&cs=1024x0" alt="StrokeArt Logo">
@@ -467,6 +553,9 @@
                 <a href="#" data-nav="catalog">Коллекция</a>
                 <a href="#" data-nav="about">О бренде</a>
                 <a href="#" data-nav="contact">Контакты</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <div class="cart-icon" id="cartIconBtn">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count" id="cartCount">0</span>
@@ -555,7 +644,39 @@
     </div>
 
     <script>
-        // ---------- ТОВАРЫ (каталог) с уникальными фото и реальными названиями ----------
+        // ========== ТЕМНАЯ ТЕМА ==========
+        function initTheme() {
+            const savedTheme = localStorage.getItem('strokeart_theme');
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                document.body.classList.remove('dark-theme');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.body.classList.toggle('dark-theme');
+                if (isDark) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('strokeart_theme', 'dark');
+                    showToast('🌙 Темная тема активирована');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('strokeart_theme', 'light');
+                    showToast('☀️ Светлая тема активирована');
+                }
+            });
+        }
+
+        // ========== ТОВАРЫ (каталог) ==========
         const products = [
             { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 990, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy+Ebony", desc: "Корпус из эбенового дерева" },
             { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 1250, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora+Pearl", desc: "Акрил с перламутровым эффектом" },
@@ -565,9 +686,8 @@
             { id: 6, name: "StrokeArt Minimal", category: "Modern", price: 690, img: "https://placehold.co/400x300/e6d8ce/b27a55?text=Minimal+Matte", desc: "Матовый алюминий, эргономичная форма" }
         ];
 
-        let cart = []; // { id, name, price, quantity }
+        let cart = [];
 
-        // Рендер каталога
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             if (!grid) return;
@@ -586,7 +706,6 @@
                 `;
                 grid.appendChild(card);
             });
-            // обработчики на кнопки "В корзину"
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
@@ -595,7 +714,6 @@
             });
         }
 
-        // Показать красивое уведомление вместо alert
         function showToast(message, isError = false) {
             const existingToast = document.querySelector('.toast-notification');
             if (existingToast) existingToast.remove();
@@ -609,7 +727,6 @@
             }, 2200);
         }
 
-        // Добавление в корзину
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -624,7 +741,6 @@
             updateCartUI();
         }
 
-        // Обновление иконки корзины и отрисовка модалки
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             const cartCountSpan = document.getElementById('cartCount');
@@ -657,7 +773,6 @@
             });
             container.innerHTML = html;
             document.getElementById('cartTotalPrice').innerText = `Итого: ${total.toLocaleString()} ₽`;
-            // обработчики удаления
             document.querySelectorAll('.remove-item-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
@@ -681,7 +796,6 @@
             updateCartUI();
         }
 
-        // Загрузка корзины из localStorage
         function loadCartFromStorage() {
             const saved = localStorage.getItem('strokeart_cart');
             if (saved) {
@@ -711,7 +825,6 @@
         }
         window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
 
-        // кнопка "Оформить заказ"
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
@@ -729,7 +842,6 @@
             });
         }
 
-        // плавная навигация по якорям с активными классами
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
             if (element) {
@@ -745,13 +857,11 @@
                 else if (target === 'catalog') scrollToSection('catalogSection');
                 else if (target === 'about') scrollToSection('aboutSection');
                 else if (target === 'contact') scrollToSection('contactSection');
-                // активные классы
                 document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
                 link.classList.add('active');
             });
         });
 
-        // форма обратной связи с улучшенной валидацией
         const feedbackForm = document.getElementById('feedbackForm');
         if (feedbackForm) {
             feedbackForm.addEventListener('submit', (e) => {
@@ -774,10 +884,10 @@
             });
         }
 
-        // инициализация
+        // Инициализация
         renderProducts();
         loadCartFromStorage();
+        initTheme();
     </script>
 </body>
 </html>
-```
