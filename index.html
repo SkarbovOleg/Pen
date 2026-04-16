@@ -1,3 +1,5 @@
+Вот обновленный HTML-документ с улучшенным дизайном и исправленной проблемой отображения логотипа:
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -66,6 +68,7 @@
             display: block;
             border-radius: 10px;
             transition: transform 0.3s ease;
+            object-fit: contain;
         }
         
         .logo img:hover {
@@ -414,6 +417,33 @@
             color: #6b5e58;
         }
 
+        /* уведомление */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c2a29;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         @media (max-width: 800px) {
             .navbar { flex-direction: column; gap: 20px; }
             .hero-content h1 { font-size: 40px; }
@@ -422,6 +452,7 @@
             .section-title { font-size: 30px; }
             .logo img { height: 35px; }
             .logo { font-size: 20px; }
+            .nav-links { gap: 24px; }
         }
     </style>
 </head>
@@ -526,12 +557,14 @@
     </div>
 
     <script>
-        // ---------- ТОВАРЫ (каталог) ----------
+        // ---------- ТОВАРЫ (каталог) с уникальными фото и реальными названиями ----------
         const products = [
-            { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 900, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy+Pen", desc: "Корпус из эбенового дерева" },
-            { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 600, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora+Pen", desc: "Акрил с перламутровым эффектом" },
-            { id: 3, name: "StrokeArt Carbon", category: "Modern", price: 500, img: "https://placehold.co/400x300/cfc1b2/7b5a3e?text=Carbon+Edition", desc: "Карбоновое волокно + титан" },
-            { id: 4, name: "StrokeArt Petite", category: "Mini", price: 400, img: "https://placehold.co/400x300/f2e3d8/ab7a53?text=Petite+Pen", desc: "Компактная, для ежедневника" }
+            { id: 1, name: "StrokeArt Legacy", category: "Classic", price: 990, img: "https://placehold.co/400x300/e8d9ce/7c5a44?text=Legacy+Ebony", desc: "Корпус из эбенового дерева" },
+            { id: 2, name: "StrokeArt Aurora", category: "Limited", price: 1250, img: "https://placehold.co/400x300/dbcbbc/9b6e4c?text=Aurora+Pearl", desc: "Акрил с перламутровым эффектом" },
+            { id: 3, name: "StrokeArt Carbon", category: "Modern", price: 870, img: "https://placehold.co/400x300/cfc1b2/7b5a3e?text=Carbon+Titan", desc: "Карбоновое волокно + титан" },
+            { id: 4, name: "StrokeArt Petite", category: "Mini", price: 540, img: "https://placehold.co/400x300/f2e3d8/ab7a53?text=Petite+Pen", desc: "Компактная, для ежедневника" },
+            { id: 5, name: "StrokeArt Royal", category: "Premium", price: 1890, img: "https://placehold.co/400x300/f0e0d0/a05c3c?text=Royal+Gold", desc: "Позолота 24K, лимитированная серия" },
+            { id: 6, name: "StrokeArt Minimal", category: "Modern", price: 690, img: "https://placehold.co/400x300/e6d8ce/b27a55?text=Minimal+Matte", desc: "Матовый алюминий, эргономичная форма" }
         ];
 
         let cart = []; // { id, name, price, quantity }
@@ -545,7 +578,7 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <div class="product-img"><img src="${prod.img}" alt="${prod.name}"></div>
+                    <div class="product-img"><img src="${prod.img}" alt="${prod.name}" loading="lazy"></div>
                     <div class="product-info">
                         <div class="product-category">${prod.category}</div>
                         <div class="card-title">${prod.name}</div>
@@ -555,13 +588,27 @@
                 `;
                 grid.appendChild(card);
             });
-            // добавим обработчики на кнопки "В корзину"
+            // обработчики на кнопки "В корзину"
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
                     addToCart(id);
                 });
             });
+        }
+
+        // Показать красивое уведомление вместо alert
+        function showToast(message, isError = false) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) existingToast.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.style.backgroundColor = isError ? '#c25b3a' : '#2c5a3e';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                if (toast && toast.parentNode) toast.remove();
+            }, 2200);
         }
 
         // Добавление в корзину
@@ -571,11 +618,12 @@
             const existing = cart.find(item => item.id === productId);
             if (existing) {
                 existing.quantity++;
+                showToast(`➕ ${product.name} теперь ×${existing.quantity}`);
             } else {
                 cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+                showToast(`✨ ${product.name} добавлена в корзину`);
             }
             updateCartUI();
-            showTemporaryMessage(`✅ ${product.name} добавлена в корзину`);
         }
 
         // Обновление иконки корзины и отрисовка модалки
@@ -583,7 +631,6 @@
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             const cartCountSpan = document.getElementById('cartCount');
             if (cartCountSpan) cartCountSpan.innerText = totalItems;
-            // сохраним в localStorage для сохранения
             localStorage.setItem('strokeart_cart', JSON.stringify(cart));
             renderCartModal();
         }
@@ -624,23 +671,16 @@
         function removeFromCart(id) {
             const index = cart.findIndex(i => i.id === id);
             if (index !== -1) {
-                if (cart[index].quantity > 1) cart[index].quantity--;
-                else cart.splice(index, 1);
+                const itemName = cart[index].name;
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                    showToast(`➖ ${itemName} удалена одна единица`);
+                } else {
+                    cart.splice(index, 1);
+                    showToast(`🗑️ ${itemName} удалена из корзины`);
+                }
             }
             updateCartUI();
-            showTemporaryMessage(`Товар удалён из корзины`);
-        }
-
-        function showTemporaryMessage(msg) {
-            const statusDiv = document.getElementById('formStatus');
-            if (statusDiv) {
-                const oldMsg = statusDiv.innerText;
-                statusDiv.innerText = msg;
-                statusDiv.style.color = '#b87c4f';
-                setTimeout(() => { if (statusDiv.innerText === msg) statusDiv.innerText = ''; }, 2000);
-            } else {
-                alert(msg);
-            }
         }
 
         // Загрузка корзины из localStorage
@@ -678,10 +718,11 @@
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
                 if (cart.length === 0) {
-                    alert('Корзина пуста. Выберите ручки из коллекции StrokeArt');
+                    showToast('Корзина пуста. Выберите ручки из коллекции StrokeArt', true);
                     return;
                 }
-                alert(`Спасибо за заказ! Сумма: ${cart.reduce((s,i)=>s + i.price*i.quantity,0).toLocaleString()} ₽. Менеджер свяжется с вами в ближайшее время.`);
+                const totalSum = cart.reduce((s,i)=>s + i.price*i.quantity,0);
+                showToast(`✨ Спасибо! Сумма заказа ${totalSum.toLocaleString()} ₽. Менеджер свяжется с вами.`);
                 if(confirm('Очистить корзину после оформления?')) {
                     cart = [];
                     updateCartUI();
@@ -690,7 +731,7 @@
             });
         }
 
-        // плавная навигация по якорям
+        // плавная навигация по якорям с активными классами
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
             if (element) {
@@ -706,13 +747,13 @@
                 else if (target === 'catalog') scrollToSection('catalogSection');
                 else if (target === 'about') scrollToSection('aboutSection');
                 else if (target === 'contact') scrollToSection('contactSection');
-                // активные классы визуально
+                // активные классы
                 document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
                 link.classList.add('active');
             });
         });
 
-        // форма обратной связи
+        // форма обратной связи с улучшенной валидацией
         const feedbackForm = document.getElementById('feedbackForm');
         if (feedbackForm) {
             feedbackForm.addEventListener('submit', (e) => {
@@ -720,12 +761,18 @@
                 const name = document.getElementById('userName')?.value.trim();
                 const email = document.getElementById('userEmail')?.value.trim();
                 if (!name || !email) {
-                    document.getElementById('formStatus').innerText = 'Пожалуйста, укажите имя и email';
+                    const statusDiv = document.getElementById('formStatus');
+                    statusDiv.innerHTML = '<span style="color:#c25b3a;">Пожалуйста, укажите имя и email</span>';
+                    setTimeout(() => { statusDiv.innerHTML = ''; }, 3000);
                     return;
                 }
-                document.getElementById('formStatus').innerHTML = '<span style="color:#b87c4f;">Спасибо! Мы свяжемся с вами в течение дня ✨</span>';
+                const phone = document.getElementById('userPhone')?.value.trim();
+                const message = document.getElementById('userMsg')?.value.trim();
+                console.log(`Запрос от ${name}, ${email}, тел: ${phone}, сообщение: ${message}`);
+                const statusDiv = document.getElementById('formStatus');
+                statusDiv.innerHTML = '<span style="color:#b87c4f;">Спасибо! Мы свяжемся с вами в течение дня ✨</span>';
                 feedbackForm.reset();
-                setTimeout(() => { document.getElementById('formStatus').innerText = ''; }, 4000);
+                setTimeout(() => { statusDiv.innerHTML = ''; }, 4000);
             });
         }
 
@@ -735,3 +782,4 @@
     </script>
 </body>
 </html>
+```
