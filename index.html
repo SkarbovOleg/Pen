@@ -220,6 +220,17 @@
         .sale-text p {
             opacity: 0.95;
         }
+        .sale-code {
+            background: white;
+            color: #b87c4f;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-top: 12px;
+        }
         .timer {
             display: flex;
             gap: 16px;
@@ -241,15 +252,6 @@
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-        .sale-code {
-            background: white;
-            color: #b87c4f;
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 2px;
         }
 
         /* Блог */
@@ -332,14 +334,13 @@
         }
         .discount-info {
             font-size: 14px;
-            color: #2c5a3e;
             margin-top: 8px;
         }
         body.dark-theme .discount-info {
-            color: #7abf8c;
+            color: inherit;
         }
 
-        /* Hero и остальные стили (как были, адаптированы под переменные) */
+        /* Hero и остальные стили */
         .hero {
             display: flex;
             flex-wrap: wrap;
@@ -486,7 +487,7 @@
 
     <main>
         <div class="container" id="homeSection">
-            <!-- АКЦИЯ с таймером -->
+            <!-- Акция с таймером и промокодом -->
             <div class="sale-banner">
                 <div class="sale-text">
                     <h3>🔥 Летняя распродажа</h3>
@@ -569,7 +570,7 @@
         </div>
     </footer>
 
-    <!-- Модалка корзины с промокодом -->
+    <!-- Модалка корзины -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" style="position:absolute; top:20px; right:24px; font-size:28px; cursor:pointer;">&times;</span>
@@ -577,7 +578,7 @@
             <div id="cartItemsList" class="cart-items"></div>
             <div class="cart-total" id="cartTotalPrice">Итого: 0 ₽</div>
             
-            <!-- Промокод -->
+            <!-- Промокод (без текста о доступных кодах) -->
             <div class="promo-section">
                 <div style="font-weight:600;">Промокод</div>
                 <div class="promo-input-group">
@@ -692,21 +693,25 @@
             showToast('Корзина обновлена');
         }
 
+        // Промокоды работают, но без текста-подсказки внизу
         function applyPromo(code) {
             if(code === 'STROKE15') {
                 appliedDiscount = 0.15;
                 activePromo = 'STROKE15';
                 document.getElementById('promoMessage').innerHTML = '✅ Промокод STROKE15 применён! Скидка 15%';
+                document.getElementById('promoMessage').style.color = '#2c5a3e';
                 showToast('Промокод применён! Скидка 15%');
             } else if(code === 'WELCOME10') {
                 appliedDiscount = 0.10;
                 activePromo = 'WELCOME10';
                 document.getElementById('promoMessage').innerHTML = '✅ Промокод WELCOME10 применён! Скидка 10%';
+                document.getElementById('promoMessage').style.color = '#2c5a3e';
                 showToast('Промокод применён! Скидка 10%');
             } else {
                 appliedDiscount = 0;
                 activePromo = null;
-                document.getElementById('promoMessage').innerHTML = '❌ Неверный промокод. Доступны: STROKE15, WELCOME10';
+                document.getElementById('promoMessage').innerHTML = '❌ Неверный промокод';
+                document.getElementById('promoMessage').style.color = '#c25b3a';
                 showToast('Неверный промокод', true);
             }
             renderCartModal();
@@ -760,7 +765,6 @@
             `).join('');
         }
 
-        // Остальные функции
         function showToast(msg, isError=false) {
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
