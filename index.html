@@ -15,36 +15,8 @@
             box-sizing: border-box;
         }
 
-        /* ========== СВЕТЛАЯ ТЕМА ========== */
+        /* ========== ТОЛЬКО ТЁМНАЯ ТЕМА (удалена светлая) ========== */
         :root {
-            --bg-primary: #fefaf5;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --bg-about: #fef3ea;
-            --bg-form: #ffffff;
-            --text-primary: #1e1b1a;
-            --text-secondary: #4a4644;
-            --text-muted: #6b5e58;
-            --border-light: rgba(0,0,0,0.05);
-            --border-card: #f0e8e0;
-            --border-form: #e0d4ca;
-            --btn-bg: #b87c4f;
-            --btn-hover: #9b623b;
-            --btn-outline: #b87c4f;
-            --add-to-cart-bg: #f5ede6;
-            --add-to-cart-hover: #e2d2c6;
-            --modal-bg: white;
-            --footer-border: #e6dbd1;
-            --icon-color: #1e1b1a;
-            --stat-color: #886b58;
-            --toast-bg: #2c2a29;
-            --blog-bg: #ffffff;
-            --rating-star: #ffc107;
-            --rating-star-empty: #e0e0e0;
-        }
-
-        /* ========== ТЕМНАЯ ТЕМА ========== */
-        body.dark-theme {
             --bg-primary: #121212;
             --bg-secondary: #1e1e1e;
             --bg-card: #1e1e1e;
@@ -171,16 +143,7 @@
             color: #b87c4f;
         }
         
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--icon-color);
-            padding: 8px;
-            border-radius: 50%;
-            transition: 0.2s;
-        }
+        /* Кнопка темы УДАЛЕНА — больше не используется */
         
         .cart-icon {
             position: relative;
@@ -652,7 +615,7 @@
                 <a href="#" data-nav="blog">Блог</a>
                 <a href="#" data-nav="about">О бренде</a>
                 <a href="#" data-nav="contact">Контакты</a>
-                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <!-- Кнопка переключения темы ПОЛНОСТЬЮ УДАЛЕНА -->
                 <div class="cart-icon" id="cartIconBtn">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count" id="cartCount">0</span>
@@ -1142,7 +1105,7 @@
             });
         }
 
-        // ========== МОДАЛКА И ТЕМА ==========
+        // ========== МОДАЛКА ==========
         const modal = document.getElementById('cartModal');
         document.getElementById('cartIconBtn').addEventListener('click', () => { renderCartModal(); modal.style.display = 'flex'; });
         document.querySelector('.close-modal').addEventListener('click', () => modal.style.display = 'none');
@@ -1157,23 +1120,6 @@
             showToast(`Заказ на ${total.toLocaleString()} ₽ оформлен! С вами свяжутся.`);
             if(confirm('Очистить корзину?')) { cart = []; appliedDiscount = 0; activePromo = null; updateCartUI(); modal.style.display = 'none'; }
         });
-
-        function initTheme() {
-            const saved = localStorage.getItem('strokeart_theme');
-            const toggle = document.getElementById('themeToggle');
-            const icon = toggle.querySelector('i');
-            if(saved === 'dark') {
-                document.body.classList.add('dark-theme');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
-            toggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-theme');
-                const isDark = document.body.classList.contains('dark-theme');
-                if(isDark) { icon.classList.replace('fa-moon', 'fa-sun'); localStorage.setItem('strokeart_theme','dark'); }
-                else { icon.classList.replace('fa-sun', 'fa-moon'); localStorage.setItem('strokeart_theme','light'); }
-                showToast(isDark ? '🌙 Тёмная тема' : '☀️ Светлая тема');
-            });
-        }
 
         function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
         document.querySelectorAll('[data-nav]').forEach(link => {
@@ -1223,12 +1169,11 @@
             showToast('Спасибо за ваш отзыв!');
         });
 
-        // Инициализация
+        // Инициализация (функция переключения темы полностью удалена)
         renderProducts();
         renderBlog();
         renderReviews();
         loadCartFromStorage();
-        initTheme();
         startCountdown();
         initScrollTop();
         initReviewStars();
